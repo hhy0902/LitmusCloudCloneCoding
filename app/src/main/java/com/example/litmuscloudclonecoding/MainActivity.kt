@@ -3,7 +3,6 @@ package com.example.litmuscloudclonecoding
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.view.LayoutInflater
 import android.widget.Toast
 import com.example.litmuscloudclonecoding.LoginData.Key
 import com.example.litmuscloudclonecoding.databinding.ActivityMainBinding
@@ -31,10 +30,14 @@ class MainActivity : AppCompatActivity() {
             litmusId = binding.idEditText.text.toString()
             litmusPassword = binding.passWordEditText.text.toString()
 
-            Log.d("asdf","${litmusId}")
+            val loginFoId = LoginInformation()
+
+
+
+            Log.d("asdf","${loginFoId}")
             Log.d("asdf","${litmusPassword}")
 
-            RetrofitObjects.litmusCloud.getKey("hhy09020","1234").enqueue(object : Callback<Key> {
+            RetrofitObjects.litmusCloud.getKey(loginFoId).enqueue(object : Callback<Key> {
                 override fun onResponse(call: Call<Key>, response: Response<Key>) {
                     if (response.isSuccessful) {
                         val main = response.body()
