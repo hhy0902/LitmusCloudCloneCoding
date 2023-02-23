@@ -1,6 +1,6 @@
 package com.example.litmuscloudclonecoding
 
-class LoginInformation {
-    var username: String? = "hhy09020"
-    var password: String? = "1234"
+class LoginInformation(id : String, password : String) {
+    var username: String? = id
+    var password: String? = password
 }

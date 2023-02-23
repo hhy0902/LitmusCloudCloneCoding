@@ -9,16 +9,15 @@ import java.util.concurrent.TimeUnit
 
 object RetrofitObjects {
 
-
     val litmusCloud : RetrofitServices by lazy {
         getLitmus().create(RetrofitServices::class.java)
     }
 
 
     private fun getLitmus() : Retrofit {
-
         return Retrofit.Builder()
             .baseUrl("https://tower.litmuscloud.com/")
+            .client(buildOkHttpClient())
             .addConverterFactory(GsonConverterFactory.create())
             .build()
     }
