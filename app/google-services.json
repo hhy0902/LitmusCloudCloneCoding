@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "683718399464",
+    "project_id": "litmuscloudclonecoding",
+    "storage_bucket": "litmuscloudclonecoding.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:683718399464:android:fd1d3ef02f53174772405d",
+        "android_client_info": {
+          "package_name": "com.example.litmuscloudclonecoding"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "683718399464-o4lptvrqht14bbo0gmk2shg102ebe31f.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBoUAgGvxUjkcX7_HrCapzpFeDedKKZcG4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "683718399464-o4lptvrqht14bbo0gmk2shg102ebe31f.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

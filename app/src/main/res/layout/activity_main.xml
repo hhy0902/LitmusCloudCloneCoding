@@ -6,16 +6,45 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <TextView
-        android:text="main"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
-
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/button"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/siteText"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:text="사이트"
+        android:textStyle="bold"
+        android:textSize="40dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/zoneText"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:text="존"
+        android:textStyle="bold"
+        android:textSize="40dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/siteText" />
+
+    <TextView
+        android:id="@+id/sensorText"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:text="센서"
+        android:textStyle="bold"
+        android:textSize="40dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/zoneText" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

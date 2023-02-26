@@ -1,6 +1,7 @@
 package com.example.litmuscloudclonecoding
 
 import android.content.Context
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -32,10 +33,13 @@ class MainActivity : AppCompatActivity() {
     var zoneId = ""
     var litmusToken = ""
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
+
+        binding.button.setOnClickListener {
+            startActivity(Intent(this, LoginActivity::class.java))
+        }
 
         lifecycleScope.launch {
             litmusToken = readToekn("litmusToken").toString()

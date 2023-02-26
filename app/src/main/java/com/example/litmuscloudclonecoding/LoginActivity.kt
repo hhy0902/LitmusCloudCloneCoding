@@ -74,7 +74,7 @@ class LoginActivity : AppCompatActivity() {
                     }
 
                     override fun onFailure(call: Call<Key>, t: Throwable) {
-                        Log.d("asdf onFailure","onFailure")
+                        Log.d("asdf onFailure","${t.message}")
                         Toast.makeText(this@LoginActivity, "로그인할 수 없습니다. 나중에 다시 시도해 주세요.", Toast.LENGTH_SHORT).show()
                     }
 
