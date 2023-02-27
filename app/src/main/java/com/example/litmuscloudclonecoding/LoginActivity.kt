@@ -17,6 +17,8 @@ import androidx.lifecycle.lifecycleScope
 import com.example.litmuscloudclonecoding.DataStoreObject.dataStore
 import com.example.litmuscloudclonecoding.LoginData.Key
 import com.example.litmuscloudclonecoding.databinding.ActivityLoginBinding
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import retrofit2.Call
@@ -31,6 +33,8 @@ class LoginActivity : AppCompatActivity() {
 
     private var litmusId = ""
     private var litmusPassword = ""
+
+    val db = Firebase.firestore
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -59,10 +63,24 @@ class LoginActivity : AppCompatActivity() {
                             val key = main?.key.toString()
                             Log.d("asdf key","${key}")
 
-                            lifecycleScope.launch {
-                                saveToekn("litmusToken",key)
-                            }
+                            val token = hashMapOf(
+                                "token" to "${key}"
+                            )
 
+                            db.collection("token").document("token")
+                                .set(token)
+                                .addOnSuccessListener {
+                                    Log.d("asdf DocumentSnapshot successfully written!", "DocumentSnapshot successfully written!")
+                                }
+                                .addOnFailureListener {
+                                    Log.d("asdf Error writing document", "Error writing document")
+                                }
+
+//                            lifecycleScope.launch {
+//                                saveToekn("litmusToken",key)
+//                                val token = readToekn("litmusToken")
+//                                println(token)
+//                            }
 
                             startActivity(Intent(this@LoginActivity, MainActivity::class.java))
                             finish()
