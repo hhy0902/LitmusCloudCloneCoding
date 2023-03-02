@@ -3,6 +3,7 @@ package com.example.litmuscloudclonecoding
 import com.example.litmuscloudclonecoding.LoginData.Key
 import com.example.litmuscloudclonecoding.OrganizationData.Org
 import com.example.litmuscloudclonecoding.OrganizationData.OrgItem
+import com.example.litmuscloudclonecoding.Sensor.Sensor
 import com.example.litmuscloudclonecoding.Site.Site
 import com.example.litmuscloudclonecoding.Zone.Zone
 import retrofit2.Call
@@ -36,6 +37,12 @@ interface RetrofitServices {
         @Header("AUTHORIZATION") AUTHORIZATION : String,
         @Path("site_id") site_id : Int
     ) : Call<Zone>
+
+    @GET("/v1/orgs/{org_id}/nodes/")
+    fun getSensor(
+        @Header("AUTHORIZATION") AUTHORIZATION : String,
+        @Path("org_id") org_id : Int
+    ) : Call<Sensor>
 
 }
 

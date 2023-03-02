@@ -15,6 +15,7 @@ import com.example.litmuscloudclonecoding.DataStoreObject.dataStore
 import com.example.litmuscloudclonecoding.LoginData.Key
 import com.example.litmuscloudclonecoding.OrganizationData.Org
 import com.example.litmuscloudclonecoding.OrganizationData.OrgItem
+import com.example.litmuscloudclonecoding.Sensor.Sensor
 import com.example.litmuscloudclonecoding.Site.Site
 import com.example.litmuscloudclonecoding.Zone.Zone
 import com.example.litmuscloudclonecoding.databinding.ActivityMainBinding
@@ -60,6 +61,7 @@ class MainActivity : AppCompatActivity() {
                                     organizationId = main?.firstOrNull()?.id!!
 
                                     getSite()
+                                    getSensor()
 
                                     Log.d("asdf organizationId","${organizationId}")
                                 } else {
@@ -102,6 +104,7 @@ class MainActivity : AppCompatActivity() {
 //                        siteId = main?.firstOrNull()?.id!!
 //                        Log.d("asdf siteId","${siteId}")
                         Log.d("asdf siteSize","${main?.size}")
+                        binding.siteText.text = "사이트 ${main?.size}"
                         Log.d("asdf siteMain","${main}")
 
                     } else {
@@ -111,6 +114,39 @@ class MainActivity : AppCompatActivity() {
 
                 override fun onFailure(call: Call<Site>, t: Throwable) {
                     Log.d("asdf site onFailure","onFailure ${t.message}")
+                }
+
+            })
+    }
+
+    private fun getSensor() {
+        RetrofitObjects.litmusCloud.getSensor("Token ${litmusToken}", organizationId)
+            .enqueue(object : Callback<Sensor> {
+                override fun onResponse(call: Call<Sensor>, response: Response<Sensor>) {
+                    if (response.isSuccessful) {
+                        val main = response.body()
+
+                        var zoneSize = mutableListOf<Any>()
+                        val sensorSize = main?.size
+
+                        for (i in 0 until sensorSize!!) {
+                            zoneSize.add(main.get(i).zoneName)
+                        }
+
+                        Log.d("asdf sensormain","${main}")
+                        Log.d("asdf sensorSize","${sensorSize}")
+                        Log.d("asdf zoneSize","${zoneSize}")
+
+                        zoneSize = zoneSize.distinct().toMutableList()
+
+                        binding.zoneText.text = "존 ${zoneSize.size}"
+                        binding.sensorText.text = "센서 ${sensorSize}"
+
+                    }
+                }
+
+                override fun onFailure(call: Call<Sensor>, t: Throwable) {
+                    Log.d("asdf sensor onFailure","onFailure ${t.message}")
                 }
 
             })
