@@ -127,15 +127,18 @@ class MainActivity : AppCompatActivity() {
                         val main = response.body()
 
                         var zoneSize = mutableListOf<Any>()
+                        var zoneNumber = mutableListOf<Any>()
                         val sensorSize = main?.size
 
                         for (i in 0 until sensorSize!!) {
                             zoneSize.add(main.get(i).zoneName)
+                            zoneNumber.add(main.get(i).zoneId)
                         }
 
                         Log.d("asdf sensormain","${main}")
                         Log.d("asdf sensorSize","${sensorSize}")
                         Log.d("asdf zoneSize","${zoneSize}")
+                        Log.d("asdf zoneNumber","${zoneNumber}")
 
                         zoneSize = zoneSize.distinct().toMutableList()
 
