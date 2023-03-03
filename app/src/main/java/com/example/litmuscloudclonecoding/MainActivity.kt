@@ -152,29 +152,12 @@ class MainActivity : AppCompatActivity() {
             })
     }
 
-//    private fun getZone() {
-//        RetrofitObjects.litmusCloud.getZone("Token ${litmusToken}", siteId)
-//            .enqueue(object : Callback<Zone> {
-//                override fun onResponse(call: Call<Zone>, response: Response<Zone>) {
-//                    if (response.isSuccessful) {
-//                        val main = response.body()
-//                        val zone = main
-//                    }
-//                }
+//    suspend fun readToekn(key : String) : String? {
+//        val dataStoreKey = stringPreferencesKey(key)
+//        val preferences = dataStore.data.first()
 //
-//                override fun onFailure(call: Call<Zone>, t: Throwable) {
-//                    Log.d("asdf zone onFailure","onFailure ${t.message}")
-//                }
-//
-//            })
+//        return preferences[dataStoreKey]
 //    }
-
-    suspend fun readToekn(key : String) : String? {
-        val dataStoreKey = stringPreferencesKey(key)
-        val preferences = dataStore.data.first()
-
-        return preferences[dataStoreKey]
-    }
 
 }
 
