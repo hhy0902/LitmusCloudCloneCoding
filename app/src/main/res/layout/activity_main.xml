@@ -46,5 +46,38 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/zoneText" />
 
+    <TextView
+        android:id="@+id/dangerText"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:text="위험"
+        android:textStyle="bold"
+        android:textSize="40dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/sensorText" />
+
+    <TextView
+        android:id="@+id/warningText"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:text="경고"
+        android:textStyle="bold"
+        android:textSize="40dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/dangerText" />
+
+    <TextView
+        android:id="@+id/cautionText"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:text="주의"
+        android:textStyle="bold"
+        android:textSize="40dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/warningText" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

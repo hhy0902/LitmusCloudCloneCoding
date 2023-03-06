@@ -18,6 +18,8 @@ import com.example.litmuscloudclonecoding.OrganizationData.OrgItem
 import com.example.litmuscloudclonecoding.Sensor.Sensor
 import com.example.litmuscloudclonecoding.Site.Site
 import com.example.litmuscloudclonecoding.Zone.Zone
+import com.example.litmuscloudclonecoding.ZoneAlarm.ZoneAlarm
+import com.example.litmuscloudclonecoding.ZoneAlarm.ZoneAlarmItem
 import com.example.litmuscloudclonecoding.databinding.ActivityMainBinding
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
@@ -35,7 +37,7 @@ class MainActivity : AppCompatActivity() {
 
     var organizationId = 0
     var litmusToken = ""
-
+    var alarmList = mutableListOf<Any>()
     val db = Firebase.firestore
 
 
@@ -135,16 +137,23 @@ class MainActivity : AppCompatActivity() {
                             zoneNumber.add(main.get(i).zoneId)
                         }
 
+                        zoneSize = zoneSize.distinct().toMutableList()
+                        zoneNumber = zoneNumber.distinct().toMutableList()
+
                         Log.d("asdf sensormain","${main}")
                         Log.d("asdf sensorSize","${sensorSize}")
                         Log.d("asdf zoneSize","${zoneSize}")
                         Log.d("asdf zoneNumber","${zoneNumber}")
 
-                        zoneSize = zoneSize.distinct().toMutableList()
-
                         binding.zoneText.text = "존 ${zoneSize.size}"
                         binding.sensorText.text = "센서 ${sensorSize}"
 
+                        for (i in 0..zoneNumber.size-1) {
+                            getZoneAlarmed(zoneNumber.get(i) as Int)
+                        }
+
+                    } else {
+                        Log.d("asdf sensor 데이터 가져오기 실패","onFailure ${response.message()}")
                     }
                 }
 
@@ -154,6 +163,51 @@ class MainActivity : AppCompatActivity() {
 
             })
     }
+
+    private fun getZoneAlarmed(zone_id : Int) {
+        RetrofitObjects.litmusCloud.getZoneAlarm("Token ${litmusToken}", zone_id)
+            .enqueue(object : Callback<ZoneAlarm> {
+                override fun onResponse(call: Call<ZoneAlarm>, response: Response<ZoneAlarm>) {
+                    if (response.isSuccessful) {
+                        val main = response.body()
+
+                        main?.forEach {
+                            alarmList.add(it.severity.name)
+                        }
+
+                        Log.d("asdf zoneAlarm main","${main}")
+                        Log.d("asdf zoneAlarm alarm","${alarmList}")
+
+                        val danger = alarmList.count {
+                            it.equals("위험")
+                        }
+                        val warning = alarmList.count {
+                            it.equals("경고")
+                        }
+                        val caution = alarmList.count {
+                            it.equals("주의")
+                        }
+
+                        binding.dangerText.text = "위험 : ${danger}"
+                        binding.warningText.text = "경고 : ${warning}"
+                        binding.cautionText.text = "주의 : ${caution}"
+
+                        Log.d("asdf 위험","${danger}")
+                        Log.d("asdf 경고","${warning}")
+                        Log.d("asdf 주의","${caution}")
+
+                    } else {
+                        Log.d("asdf zone alarm 데이터 가져오기 실패","onFailure ${response.message()}")
+                    }
+                }
+
+                override fun onFailure(call: Call<ZoneAlarm>, t: Throwable) {
+                    Log.d("asdf zoneAlarm onFailure","onFailure ${t.message}")
+                }
+
+            })
+    }
+
 
 //    suspend fun readToekn(key : String) : String? {
 //        val dataStoreKey = stringPreferencesKey(key)

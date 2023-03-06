@@ -6,6 +6,9 @@ import com.example.litmuscloudclonecoding.OrganizationData.OrgItem
 import com.example.litmuscloudclonecoding.Sensor.Sensor
 import com.example.litmuscloudclonecoding.Site.Site
 import com.example.litmuscloudclonecoding.Zone.Zone
+import com.example.litmuscloudclonecoding.ZoneAlarm.ZoneAlarm
+import com.google.common.net.HttpHeaders.AUTHORIZATION
+import org.checkerframework.checker.units.qual.A
 import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.GET
@@ -43,6 +46,12 @@ interface RetrofitServices {
         @Header("AUTHORIZATION") AUTHORIZATION : String,
         @Path("org_id") org_id : Int
     ) : Call<Sensor>
+
+    @GET("/v1/zones/{zone_id}/alarmEvents/?dateFrom=-24h")
+    fun getZoneAlarm(
+        @Header("AUTHORIZATION") AUTHORIZATION : String,
+        @Path("zone_id") zone_id : Int
+    ) : Call<ZoneAlarm>
 
 }
 
