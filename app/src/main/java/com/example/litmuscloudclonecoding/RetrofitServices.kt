@@ -1,5 +1,7 @@
 package com.example.litmuscloudclonecoding
 
+import com.example.litmuscloudclonecoding.Alarm.Alarm
+import com.example.litmuscloudclonecoding.Battery.Battery
 import com.example.litmuscloudclonecoding.LoginData.Key
 import com.example.litmuscloudclonecoding.OrganizationData.Org
 import com.example.litmuscloudclonecoding.OrganizationData.OrgItem
@@ -52,6 +54,17 @@ interface RetrofitServices {
         @Header("AUTHORIZATION") AUTHORIZATION : String,
         @Path("zone_id") zone_id : Int
     ) : Call<ZoneAlarm>
+
+//    @GET("/v1/orgs/{org_id}/nodes/")
+//    fun getAlarm(
+//        @Header("AUTHORIZATION") AUTHORIZATION : String,
+//        @Path("org_id") org_id : Int
+//    ) : Call<Alarm>
+
+    @GET("/v1/voltages")
+    fun getBattery(
+        @Header("AUTHORIZATION") AUTHORIZATION : String,
+    ) : Call<Battery>
 
 }
 

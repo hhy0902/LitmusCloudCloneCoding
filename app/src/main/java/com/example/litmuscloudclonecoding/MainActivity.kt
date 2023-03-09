@@ -11,6 +11,7 @@ import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
 import androidx.lifecycle.lifecycleScope
+import com.example.litmuscloudclonecoding.Battery.Battery
 import com.example.litmuscloudclonecoding.DataStoreObject.dataStore
 import com.example.litmuscloudclonecoding.LoginData.Key
 import com.example.litmuscloudclonecoding.OrganizationData.Org
@@ -64,6 +65,7 @@ class MainActivity : AppCompatActivity() {
 
                                     getSite()
                                     getSensor()
+                                    getBattery()
 
                                     Log.d("asdf organizationId","${organizationId}")
                                 } else {
@@ -131,6 +133,7 @@ class MainActivity : AppCompatActivity() {
                         var zoneSize = mutableListOf<Any>()
                         var zoneNumber = mutableListOf<Any>()
                         val sensorSize = main?.size
+                        var alarmValue = 0
 
                         for (i in 0 until sensorSize!!) {
                             zoneSize.add(main.get(i).zoneName)
@@ -145,6 +148,13 @@ class MainActivity : AppCompatActivity() {
                         Log.d("asdf zoneSize","${zoneSize}")
                         Log.d("asdf zoneNumber","${zoneNumber}")
 
+                        for (i in 0..sensorSize-1) {
+                            if (main.get(i).status == "alarmed") {
+                                alarmValue +=1
+                            }
+                        }
+
+                        Log.d("asdf alarmValue","${alarmValue}")
                         binding.zoneText.text = "존 ${zoneSize.size}"
                         binding.sensorText.text = "센서 ${sensorSize}"
 
@@ -189,12 +199,8 @@ class MainActivity : AppCompatActivity() {
                         }
 
                         binding.dangerText.text = "위험 : ${danger}"
-                        binding.warningText.text = "경고 : ${warning}"
-                        binding.cautionText.text = "주의 : ${caution}"
 
-                        Log.d("asdf 위험","${danger}")
-                        Log.d("asdf 경고","${warning}")
-                        Log.d("asdf 주의","${caution}")
+
 
                     } else {
                         Log.d("asdf zone alarm 데이터 가져오기 실패","onFailure ${response.message()}")
@@ -203,6 +209,27 @@ class MainActivity : AppCompatActivity() {
 
                 override fun onFailure(call: Call<ZoneAlarm>, t: Throwable) {
                     Log.d("asdf zoneAlarm onFailure","onFailure ${t.message}")
+                }
+
+            })
+    }
+
+    private fun getBattery() {
+        RetrofitObjects.litmusCloud.getBattery("Token ${litmusToken}")
+            .enqueue(object : Callback<Battery> {
+                override fun onResponse(call: Call<Battery>, response: Response<Battery>) {
+                    if (response.isSuccessful) {
+                        val main = response.body()
+
+                        Log.d("asdf Battery","${main}")
+
+                    } else {
+                        Log.d("asdf Battery 데이터 가져오기 실패","onFailure ${response.message()}")
+                    }
+                }
+
+                override fun onFailure(call: Call<Battery>, t: Throwable) {
+                    Log.d("asdf Battery onFailure","onFailure ${t.message}")
                 }
 
             })
