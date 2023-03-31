@@ -47,10 +47,10 @@
         app:layout_constraintTop_toBottomOf="@id/zoneText" />
 
     <TextView
-        android:id="@+id/dangerText"
+        android:id="@+id/alarmText"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:text="위험"
+        android:text="경보"
         android:textStyle="bold"
         android:textSize="40dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -58,18 +58,18 @@
         app:layout_constraintTop_toBottomOf="@id/sensorText" />
 
     <TextView
-        android:id="@+id/warningText"
+        android:id="@+id/batteryNormalText"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:text="경고"
+        android:text="정상"
         android:textStyle="bold"
         android:textSize="40dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/dangerText" />
+        app:layout_constraintTop_toBottomOf="@id/alarmText" />
 
     <TextView
-        android:id="@+id/cautionText"
+        android:id="@+id/batteryCautionText"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:text="주의"
@@ -77,7 +77,19 @@
         android:textSize="40dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/warningText" />
+        app:layout_constraintTop_toBottomOf="@id/batteryNormalText" />
+
+    <TextView
+        android:id="@+id/batteryDangerText"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:text="위험"
+        android:textStyle="bold"
+        android:textSize="40dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/batteryCautionText" />
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

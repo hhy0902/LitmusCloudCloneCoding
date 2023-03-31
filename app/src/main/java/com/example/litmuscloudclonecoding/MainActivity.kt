@@ -157,10 +157,11 @@ class MainActivity : AppCompatActivity() {
                         Log.d("asdf alarmValue","${alarmValue}")
                         binding.zoneText.text = "존 ${zoneSize.size}"
                         binding.sensorText.text = "센서 ${sensorSize}"
+                        binding.alarmText.text = "경보 ${alarmValue}"
 
-                        for (i in 0..zoneNumber.size-1) {
-                            getZoneAlarmed(zoneNumber.get(i) as Int)
-                        }
+//                        for (i in 0..zoneNumber.size-1) {
+//                            getZoneAlarmed(zoneNumber.get(i) as Int)
+//                        }
 
                     } else {
                         Log.d("asdf sensor 데이터 가져오기 실패","onFailure ${response.message()}")
@@ -174,45 +175,6 @@ class MainActivity : AppCompatActivity() {
             })
     }
 
-    private fun getZoneAlarmed(zone_id : Int) {
-        RetrofitObjects.litmusCloud.getZoneAlarm("Token ${litmusToken}", zone_id)
-            .enqueue(object : Callback<ZoneAlarm> {
-                override fun onResponse(call: Call<ZoneAlarm>, response: Response<ZoneAlarm>) {
-                    if (response.isSuccessful) {
-                        val main = response.body()
-
-                        main?.forEach {
-                            alarmList.add(it.severity.name)
-                        }
-
-                        Log.d("asdf zoneAlarm main","${main}")
-                        Log.d("asdf zoneAlarm alarm","${alarmList}")
-
-                        val danger = alarmList.count {
-                            it.equals("위험")
-                        }
-                        val warning = alarmList.count {
-                            it.equals("경고")
-                        }
-                        val caution = alarmList.count {
-                            it.equals("주의")
-                        }
-
-                        binding.dangerText.text = "위험 : ${danger}"
-
-
-
-                    } else {
-                        Log.d("asdf zone alarm 데이터 가져오기 실패","onFailure ${response.message()}")
-                    }
-                }
-
-                override fun onFailure(call: Call<ZoneAlarm>, t: Throwable) {
-                    Log.d("asdf zoneAlarm onFailure","onFailure ${t.message}")
-                }
-
-            })
-    }
 
     private fun getBattery() {
         RetrofitObjects.litmusCloud.getBattery("Token ${litmusToken}")
@@ -221,7 +183,32 @@ class MainActivity : AppCompatActivity() {
                     if (response.isSuccessful) {
                         val main = response.body()
 
+                        var batteryNormal = 0
+                        var batteryCaution = 0
+                        var batteryDanger = 0
+
                         Log.d("asdf Battery","${main}")
+                        main?.forEach {
+                            Log.d("asdf battery 전압","${it.node_uid} / ${it.voltage}")
+
+                            if (it.voltage > 3.5) {
+                                Log.d("asdf battery 전압","정상")
+                                batteryNormal += 1
+                            } else if (it.voltage > 3.45 && it.voltage < 3.5) {
+                                Log.d("asdf battery 전압","주의")
+                                batteryCaution += 1
+                            } else {
+                                Log.d("asdf battery 전압","위험")
+                                batteryDanger += 1
+                            }
+                        }
+
+                        binding.batteryNormalText.text = "정상 ${batteryNormal}"
+                        binding.batteryCautionText.text = "주의 ${batteryCaution}"
+                        binding.batteryDangerText.text = "위험 ${batteryDanger}"
+
+
+
 
                     } else {
                         Log.d("asdf Battery 데이터 가져오기 실패","onFailure ${response.message()}")
